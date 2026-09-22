@@ -1,11 +1,11 @@
 <script setup lang="ts"></script>
 
 <template>
-  <h1>You did it!</h1>
-  <p>
-    Visit <a href="https://vuejs.org/" target="_blank" rel="noopener">vuejs.org</a> to read the
-    documentation
-  </p>
+  <h1>Teste h1</h1>
+  <h2>Teste h2</h2>
+  <h3>Teste h3</h3>
+  <p>Teste de parágrafo</p>
+  <p>Teste de <span class="u-brutal-font">parágrafo</span></p>
 </template>
 
 <style scoped></style>
