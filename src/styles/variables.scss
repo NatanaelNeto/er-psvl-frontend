@@ -1,0 +1,23 @@
+$border-width: 3px;
+$border-radius: 10px;
+
+$shadow-amount: 4px;
+
+$padding-amount: 10px;
+
+$primary-color: #074E8D;
+$secondary-color: #FFBC42;
+$white-color: #FFFFFF;
+$black-color: #000000;
+
+:root {
+  --background-color: #fefdff;
+  --white-color: #fff;
+  --black-color: #000;
+}
+
+html.dark {
+  --background-color: #222428;
+  --white-color: #000;
+  --black-color: #fff;
+}
