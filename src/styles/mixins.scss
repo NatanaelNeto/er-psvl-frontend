@@ -1,0 +1,34 @@
+@use './variables' as *;
+
+@mixin brutal-border($brutal-border: $border-width) {
+  border: $brutal-border solid var(--black-color);
+}
+
+@mixin brutal-rounded($brutal-rounded: $border-radius) {
+  border-radius: $brutal-rounded;
+}
+
+@mixin brutal-shadow($brutal-shadow: $shadow-offset) {
+  box-shadow: $brutal-shadow $brutal-shadow 0px 0px var(--black-color);
+  transition: transform 0.15s ease, box-shadow 0.15s ease;
+
+  &:hover:not(:disabled) {
+    transform: translate(-$brutal-shadow, -$brutal-shadow);
+    box-shadow: ($brutal-shadow * 2) ($brutal-shadow * 2) 0px 0px var(--black-color);
+  }
+
+  &:active:not(:disabled) {
+    transform: translate($brutal-shadow, $brutal-shadow);
+    box-shadow: 0 0 0px 0px var(--black-color);
+  }
+}
+
+@mixin brutal-font($weight: $font-brutal-weight) {
+  font-family: "Lexend Mega", system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+  font-weight: $weight;
+}
+
+@mixin normal-font($weight: $font-normal-weight) {
+  font-family: "Public Sans", system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+  font-weight: $weight;
+}

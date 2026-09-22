@@ -11,17 +11,8 @@ $font-normal-weight: 300;
 $primary-color: #074E8D;
 $secondary-color: #FFBC42;
 $accent-color: #9723C9;
+$success-color: #10b981;
+$warning-color: #f59e0b;
+$error-color: #ef4444;
 $white-color: #FFFFFF;
 $black-color: #000000;
-
-:root {
-  --background-color: #fefdff;
-  --white-color: $white-color;
-  --black-color: $black-color;
-}
-
-html.dark {
-  --background-color: #222428;
-  --white-color: $black-color;
-  --black-color: $white-color;
-}
