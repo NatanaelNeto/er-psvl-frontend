@@ -16,6 +16,11 @@ import { User } from '@lucide/vue';
     </template>
     Secundário
   </BrutalButton>
+  <BrutalButton type="secondary" rounded>
+    <template #icon>
+      <User />
+    </template>
+  </BrutalButton>
   <BrutalButton type="accent" icon-position="right">
     Destaque
     <template #icon>

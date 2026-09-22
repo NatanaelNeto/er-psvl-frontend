@@ -29,7 +29,8 @@ const props = withDefaults(defineProps<{
     {
       'brutal-btn--rounded': props.rounded,
       'brutal-btn--shaded': props.shaded,
-      'brutal-btn--icon-right': props.iconPosition === 'right'
+      'brutal-btn--icon-right': props.iconPosition === 'right',
+      'brutal-btn--no-text': !$slots.default
     }
   ]" :disabled="disabled">
     <!-- Slot do Ícone (Só é renderizado se algo for passado para #icon) -->
@@ -38,7 +39,7 @@ const props = withDefaults(defineProps<{
     </span>
 
     <!-- Slot Padrão para o Texto -->
-    <span class="brutal-btn__text">
+    <span v-if="$slots.default" class="brutal-btn__text">
       <slot />
     </span>
   </button>
@@ -81,16 +82,31 @@ const props = withDefaults(defineProps<{
   &--small {
     padding: 0.5rem 1rem;
     font-size: 0.75rem;
+
+    &.brutal-btn--no-text {
+      padding: 0.5rem;
+      aspect-ratio: 1;
+    }
   }
 
   &--medium {
     padding: 0.75rem 1.5rem;
     font-size: 0.875rem;
+
+    &.brutal-btn--no-text {
+      padding: 0.75rem;
+      aspect-ratio: 1;
+    }
   }
 
   &--large {
     padding: 1rem 2rem;
     font-size: 1.125rem;
+
+    &.brutal-btn--no-text {
+      padding: 1rem;
+      aspect-ratio: 1;
+    }
   }
 
   /* Tipos de Cores (Paleta de alto contraste) */
