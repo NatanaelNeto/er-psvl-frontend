@@ -12,12 +12,12 @@ $black-color: #000000;
 
 :root {
   --background-color: #fefdff;
-  --white-color: #fff;
-  --black-color: #000;
+  --white-color: $white-color;
+  --black-color: $black-color;
 }
 
 html.dark {
   --background-color: #222428;
-  --white-color: #000;
-  --black-color: #fff;
+  --white-color: $black-color;
+  --black-color: $white-color;
 }
