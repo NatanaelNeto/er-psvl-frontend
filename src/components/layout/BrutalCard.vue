@@ -96,6 +96,10 @@ const cardStyle = computed(() => ({
     background-color: var(--white-color);
     color: var(--black-color);
 
+    &-slot {
+      border-bottom: $border-width solid var(--black-color);
+    }
+
     &--icon {
       display: flex;
       justify-content: center;
