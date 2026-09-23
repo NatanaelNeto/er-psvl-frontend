@@ -1,20 +1,21 @@
 <script setup lang="ts">
 // 1. Definição dos Tipos Aceitos
-type ButtonType = 'primary' | 'secondary' | 'accent' | 'success' | 'warning' | 'error'
+type ButtonType = 'primary' | 'secondary' | 'accent' | 'success' | 'warning' | 'error' | 'ghost'
 type ButtonSize = 'small' | 'medium' | 'large'
 type IconPosition = 'left' | 'right'
+type ShadeType = 'none' | 'up' | 'down'
 
 // 2. Declaração das Props com Valores Padrão
 const props = withDefaults(defineProps<{
   rounded?: boolean
-  shaded?: boolean
+  shaded?: ShadeType
   type?: ButtonType
   size?: ButtonSize
   iconPosition?: IconPosition
   disabled?: boolean
 }>(), {
   rounded: false,
-  shaded: true,
+  shaded: 'up',
   type: 'primary',
   size: 'medium',
   iconPosition: 'left',
@@ -26,9 +27,9 @@ const props = withDefaults(defineProps<{
   <button class="brutal-btn" :class="[
     `brutal-btn--${props.type}`,
     `brutal-btn--${props.size}`,
+    `brutal-btn--shaded-${props.shaded}`,
     {
       'brutal-btn--rounded': props.rounded,
-      'brutal-btn--shaded': props.shaded,
       'brutal-btn--icon-right': props.iconPosition === 'right',
       'brutal-btn--no-text': !$slots.default
     }
@@ -62,10 +63,15 @@ const props = withDefaults(defineProps<{
   text-transform: uppercase;
   cursor: pointer;
   outline: none;
+  margin: 4px;
 
   /* Comportamento do Shaded */
-  &--shaded {
+  &--shaded-up {
     @include brutal-shadow;
+  }
+
+  &--shaded-down {
+    @include brutal-shadow($elevated: false);
   }
 
   /* Comportamento do Rounded */
@@ -138,6 +144,11 @@ const props = withDefaults(defineProps<{
   &--error {
     background-color: $error-color;
     color: $white-color;
+  }
+
+  &--ghost {
+    background-color: var(--white-color);
+    color: var(--black-color);
   }
 
   /* Estado Inativo */
