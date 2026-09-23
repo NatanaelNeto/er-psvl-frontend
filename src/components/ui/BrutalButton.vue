@@ -189,7 +189,7 @@ const props = withDefaults(defineProps<{
     align-items: center;
 
     :deep(svg) {
-      stroke-width: 3px;
+      stroke-width: 2px;
     }
   }
 }
