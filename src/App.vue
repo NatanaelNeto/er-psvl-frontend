@@ -2,6 +2,7 @@
 import BrutalButton from './components/ui/BrutalButton.vue';
 import BrutalCard from './components/layout/BrutalCard.vue';
 import { User } from '@lucide/vue';
+import BrutalInput from './components/ui/BrutalInput.vue';
 </script>
 <template>
   <div class="content">
@@ -112,20 +113,66 @@ import { User } from '@lucide/vue';
         </BrutalCard>
       </div>
     </section>
+    <section>
+      <h2>Inputs</h2>
+      <div class="container">
+        <BrutalCard title="Teste de Inputs">
+          <div class="group-inputs">
+            <BrutalInput placeholder="Teste de placeholder" />
+            <BrutalInput type="number" />
+            <BrutalInput type="password" />
+            <BrutalInput label="Teste de Label" placeholder="Teste de placeholder" />
+            <BrutalInput label="Teste de Sombra" placeholder="Up" shaded="up" />
+            <BrutalInput label="Teste de Sombra" placeholder="Down" shaded="down" />
+            <BrutalInput label="Teste com Ícone" placeholder="Esquerda">
+              <template #left>
+                <User />
+              </template>
+            </BrutalInput>
+            <BrutalInput label="Teste com Ícone" placeholder="Direita">
+              <template #right>
+                <User />
+              </template>
+            </BrutalInput>
+            <BrutalInput label="Teste de Tamanho" placeholder="Pequeno" size="small" />
+            <BrutalInput label="Teste de Tamanho" placeholder="Médio" size="medium" />
+            <BrutalInput label="Teste de Tamanho" placeholder="Grande" size="large" />
+            <BrutalInput label="Teste de Bordas" placeholder="Sem" rounded="none" />
+            <BrutalInput label="Teste de Bordas" placeholder="Leve" rounded="light" />
+            <BrutalInput label="Teste de Bordas" placeholder="Completo" rounded="full" />
+            <BrutalInput label="Teste de Estado" placeholder="Hint" hint="Dica sob o input" />
+            <BrutalInput label="Teste de Estado" placeholder="Disabled" disabled />
+            <BrutalInput label="Teste de Estado" placeholder="Sucesso" status="success" message="Sucesso!" />
+            <BrutalInput label="Teste de Estado" placeholder="Alerta" status="warning" message="Cuidado!" />
+            <BrutalInput label="Teste de Estado" placeholder="Erro" error="Erro ao preencher" />
+          </div>
+        </BrutalCard>
+      </div>
+    </section>
   </div>
 </template>
 
-<style scoped>
+<style lang="scss" scoped>
 section {
   margin-bottom: 20px;
 }
 
-.group-cards {
-  display: flex;
-  flex-direction: row;
-  flex-wrap: wrap;
-  gap: 8px;
-  margin-bottom: 8px;
+.group {
+  &-cards {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    gap: 8px;
+    margin-bottom: 8px;
+  }
+
+  &-inputs {
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr 1fr;
+    width: 100%;
+    gap: 8px;
+    align-items: end;
+  }
 }
 
 .card-buttons {
@@ -133,5 +180,10 @@ section {
   width: 100%;
   grid-template-columns: 1fr 1fr;
   gap: 8px;
+}
+
+.container {
+  width: 90%;
+  margin: 0 auto;
 }
 </style>

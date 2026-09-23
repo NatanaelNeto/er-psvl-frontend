@@ -1,9 +1,11 @@
 <script setup lang="ts">
+import { computed } from 'vue'
+
 type RoundedType = 'none' | 'light'
 type HeaderType = 'default' | 'primary' | 'secondary' | 'accent' | 'success' | 'warning' | 'error' | 'none'
 
 const props = withDefaults(defineProps<{
-  title: string,
+  title?: string,
   subtitle?: string,
   brutal_title?: boolean,
   rounded?: RoundedType,
@@ -12,18 +14,30 @@ const props = withDefaults(defineProps<{
   header?: HeaderType
 }>(), {
   rounded: 'none',
-  height: 200,
-  width: 200,
+  height: 'auto',
+  width: 'auto',
   header: 'default',
   brutal_title: false,
 })
+
+const formatSize = (value: number | string) => {
+  if (typeof value === 'number') return `${value}px`
+  if (!isNaN(Number(value))) return `${value}px`
+  return value
+}
+
+const cardStyle = computed(() => ({
+  width: formatSize(props.width),
+  height: formatSize(props.height)
+}))
 </script>
 <template>
-  <div :style="{ width: props.width + 'px', height: props.height + 'px' }" class="brutal-card" :class="[
+  <div :style="cardStyle" class="brutal-card" :class="[
     { 'brutal-card--rounded-light': props.rounded === 'light' },
     { 'brutal-card--brutal-title': props.brutal_title }
   ]">
-    <div v-if="!$slots.header" class="brutal-card__header" :class="[`brutal-card__header--${props.header}`]">
+    <div v-if="!$slots.header && props.header !== 'none'" class="brutal-card__header"
+      :class="[`brutal-card__header--${props.header}`]">
       <div v-if="$slots.headericon" class="brutal-card__header--icon">
         <slot name="headericon" />
       </div>
@@ -32,7 +46,8 @@ const props = withDefaults(defineProps<{
         <p v-if="props.subtitle" class="brutal-card__subtitle">{{ props.subtitle }}</p>
       </div>
     </div>
-    <div v-else class="brutal-card__header-slot" :class="[`brutal-card__header--${props.header}`]">
+    <div v-else-if="props.header !== 'none'" class="brutal-card__header-slot"
+      :class="[`brutal-card__header--${props.header}`]">
       <slot name="header" />
     </div>
     <div class="brutal-card__content">
