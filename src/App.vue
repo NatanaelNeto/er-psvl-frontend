@@ -1,5 +1,6 @@
 <script setup lang="ts">
 import BrutalButton from './components/ui/BrutalButton.vue';
+import BrutalCard from './components/layout/BrutalCard.vue';
 import { User } from '@lucide/vue';
 </script>
 <template>
@@ -77,7 +78,60 @@ import { User } from '@lucide/vue';
         </BrutalButton>
       </div>
     </section>
+    <section>
+      <h2>Teste de Cards</h2>
+      <div class="group-cards">
+
+        <BrutalCard title="Card 1">Conteúdo do card</BrutalCard>
+        <BrutalCard title="Card 2" rounded="light" header="primary">
+          <h3>Conteúdo do card</h3>
+          <p>Conteúdo do card</p>
+        </BrutalCard>
+        <BrutalCard title="Card 3" subtitle="Teste de subtítulo" width="400">
+          <h3>Conteúdo do card</h3>
+          <p>Conteúdo do card</p>
+        </BrutalCard>
+      </div>
+      <div class="group-cards">
+        <BrutalCard brutal_title height="400" width="408" title="Card 3">
+          <h3>Conteúdo do card</h3>
+          <p>Conteúdo do card</p>
+          <template #footer>
+            <div class="card-buttons">
+              <BrutalButton width="100%" type="error">Cancelar</BrutalButton>
+              <BrutalButton width="100%">Confirmar</BrutalButton>
+            </div>
+          </template>
+        </BrutalCard>
+        <BrutalCard header="success" rounded="light" height="400" width="400" title="Card 4" subtitle="Teste de ícone">
+          <template #headericon>
+            <User />
+          </template>
+          <h3>Conteúdo do card</h3>
+          <p>Conteúdo do card</p>
+        </BrutalCard>
+      </div>
+    </section>
   </div>
 </template>
 
-<style scoped></style>
+<style scoped>
+section {
+  margin-bottom: 20px;
+}
+
+.group-cards {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin-bottom: 8px;
+}
+
+.card-buttons {
+  display: grid;
+  width: 100%;
+  grid-template-columns: 1fr 1fr;
+  gap: 8px;
+}
+</style>

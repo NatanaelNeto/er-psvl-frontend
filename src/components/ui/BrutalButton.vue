@@ -14,18 +14,20 @@ const props = withDefaults(defineProps<{
   size?: ButtonSize
   iconPosition?: IconPosition
   disabled?: boolean
+  width?: number | string
 }>(), {
   rounded: 'none',
   shaded: 'up',
   type: 'primary',
   size: 'medium',
   iconPosition: 'left',
-  disabled: false
+  disabled: false,
+  width: 'auto',
 })
 </script>
 
 <template>
-  <button class="brutal-btn" :class="[
+  <button class="brutal-btn" :style="{ width: props.width }" :class="[
     `brutal-btn--${props.type}`,
     `brutal-btn--${props.size}`,
     `brutal-btn--shaded-${props.shaded}`,
