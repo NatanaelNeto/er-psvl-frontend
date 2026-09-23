@@ -4,17 +4,18 @@ type ButtonType = 'primary' | 'secondary' | 'accent' | 'success' | 'warning' | '
 type ButtonSize = 'small' | 'medium' | 'large'
 type IconPosition = 'left' | 'right'
 type ShadeType = 'none' | 'up' | 'down'
+type RoundedType = 'none' | 'light' | 'full'
 
 // 2. Declaração das Props com Valores Padrão
 const props = withDefaults(defineProps<{
-  rounded?: boolean
+  rounded?: RoundedType
   shaded?: ShadeType
   type?: ButtonType
   size?: ButtonSize
   iconPosition?: IconPosition
   disabled?: boolean
 }>(), {
-  rounded: false,
+  rounded: 'none',
   shaded: 'up',
   type: 'primary',
   size: 'medium',
@@ -28,8 +29,8 @@ const props = withDefaults(defineProps<{
     `brutal-btn--${props.type}`,
     `brutal-btn--${props.size}`,
     `brutal-btn--shaded-${props.shaded}`,
+    `brutal-btn--rounded-${props.rounded}`,
     {
-      'brutal-btn--rounded': props.rounded,
       'brutal-btn--icon-right': props.iconPosition === 'right',
       'brutal-btn--no-text': !$slots.default
     }
@@ -75,8 +76,11 @@ const props = withDefaults(defineProps<{
   }
 
   /* Comportamento do Rounded */
-  &--rounded {
+  &--rounded-light {
     @include brutal-rounded;
+  }
+  &--rounded-full {
+    @include brutal-rounded(99999px);
   }
 
   /* Controle de Ícone à Direita (inverte a ordem do flex) */
@@ -88,30 +92,48 @@ const props = withDefaults(defineProps<{
   &--small {
     padding: 0.5rem 1rem;
     font-size: 0.75rem;
-
+    min-height: $btn-height-small;
+    
     &.brutal-btn--no-text {
       padding: 0.5rem;
       aspect-ratio: 1;
     }
-  }
 
+    .brutal-btn__icon :deep(svg) {
+      width: 1rem;
+      height: 1rem;
+    }
+  }
+  
   &--medium {
     padding: 0.75rem 1.5rem;
     font-size: 0.875rem;
-
+    min-height: $btn-height-medium;
+    
     &.brutal-btn--no-text {
       padding: 0.75rem;
       aspect-ratio: 1;
     }
-  }
 
+    .brutal-btn__icon :deep(svg) {
+      width: 1.25rem;
+      height: 1.25rem;
+    }
+  }
+  
   &--large {
     padding: 1rem 2rem;
     font-size: 1.125rem;
+    min-height: $btn-height-large;
 
     &.brutal-btn--no-text {
       padding: 1rem;
       aspect-ratio: 1;
+    }
+
+    .brutal-btn__icon :deep(svg) {
+      width: 1.5rem;
+      height: 1.5rem;
     }
   }
 
@@ -167,8 +189,7 @@ const props = withDefaults(defineProps<{
     align-items: center;
 
     :deep(svg) {
-      width: 1.5em;
-      height: 1.5em;
+      stroke-width: 3px;
     }
   }
 }

@@ -46,9 +46,23 @@ import { User } from '@lucide/vue';
         <BrutalButton shaded="down">Começo em Baixo</BrutalButton>
         <BrutalButton shaded="none">Sem sombra</BrutalButton>
       </div>
+      <h3>Bordas</h3>
+      <div>
+        <BrutalButton rounded="none">Sem bordas</BrutalButton>
+        <BrutalButton rounded="light" type="secondary">Leve</BrutalButton>
+        <BrutalButton rounded="full" type="accent">Completo</BrutalButton>
+        <BrutalButton type="ghost">
+          <template #icon><User /></template>
+        </BrutalButton>
+        <BrutalButton type="ghost" rounded="light">
+          <template #icon><User /></template>
+        </BrutalButton>
+        <BrutalButton type="ghost" rounded="full">
+          <template #icon><User /></template>
+        </BrutalButton>
+      </div>
     </section>
   </div>
-  
 </template>
 
 <style scoped></style>
