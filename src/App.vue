@@ -20,11 +20,15 @@ import { User } from '@lucide/vue';
         <BrutalButton type="accent">Destaque</BrutalButton>
         <BrutalButton type="ghost">Fantasma</BrutalButton>
         <BrutalButton>
-          <template #icon><User /></template>
+          <template #icon>
+            <User />
+          </template>
           Com Ícone
         </BrutalButton>
         <BrutalButton type="ghost">
-          <template #icon><User /></template>
+          <template #icon>
+            <User />
+          </template>
         </BrutalButton>
       </div>
       <h3>Tipos</h3>
@@ -45,6 +49,11 @@ import { User } from '@lucide/vue';
         <BrutalButton shaded="up">Começo em Cima</BrutalButton>
         <BrutalButton shaded="down">Começo em Baixo</BrutalButton>
         <BrutalButton shaded="none">Sem sombra</BrutalButton>
+        <BrutalButton shaded="none" type="ghost">
+          <template #icon>
+            <User />
+          </template>
+        </BrutalButton>
       </div>
       <h3>Bordas</h3>
       <div>
@@ -52,13 +61,19 @@ import { User } from '@lucide/vue';
         <BrutalButton rounded="light" type="secondary">Leve</BrutalButton>
         <BrutalButton rounded="full" type="accent">Completo</BrutalButton>
         <BrutalButton type="ghost">
-          <template #icon><User /></template>
+          <template #icon>
+            <User />
+          </template>
         </BrutalButton>
         <BrutalButton type="ghost" rounded="light">
-          <template #icon><User /></template>
+          <template #icon>
+            <User />
+          </template>
         </BrutalButton>
         <BrutalButton type="ghost" rounded="full">
-          <template #icon><User /></template>
+          <template #icon>
+            <User />
+          </template>
         </BrutalButton>
       </div>
     </section>

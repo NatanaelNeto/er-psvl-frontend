@@ -66,19 +66,28 @@ const props = withDefaults(defineProps<{
   outline: none;
   margin: 4px;
 
-  /* Comportamento do Shaded */
-  &--shaded-up {
-    @include brutal-shadow;
-  }
+  &--shaded {
 
-  &--shaded-down {
-    @include brutal-shadow($elevated: false);
+    /* Comportamento do Shaded */
+    &-up {
+      @include brutal-shadow($elevated: true, $hover: true);
+    }
+
+    &-down {
+      @include brutal-shadow($elevated: false, $hover: true);
+    }
+
+    &-none:hover:not(:disabled) {
+      box-shadow: inset 0 0 0 999px rgba(255, 255, 255, 0.2);
+      transition: box-shadow 0.15s ease;
+    }
   }
 
   /* Comportamento do Rounded */
   &--rounded-light {
     @include brutal-rounded;
   }
+
   &--rounded-full {
     @include brutal-rounded(99999px);
   }
@@ -90,12 +99,12 @@ const props = withDefaults(defineProps<{
 
   /* Tamanhos */
   &--small {
-    padding: 0.5rem 1rem;
+    padding: 0 1rem;
     font-size: 0.75rem;
     min-height: $btn-height-small;
-    
+
     &.brutal-btn--no-text {
-      padding: 0.5rem;
+      padding: 0;
       aspect-ratio: 1;
     }
 
@@ -104,14 +113,14 @@ const props = withDefaults(defineProps<{
       height: 1rem;
     }
   }
-  
+
   &--medium {
-    padding: 0.75rem 1.5rem;
+    padding: 0 1.5rem;
     font-size: 0.875rem;
     min-height: $btn-height-medium;
-    
+
     &.brutal-btn--no-text {
-      padding: 0.75rem;
+      padding: 0;
       aspect-ratio: 1;
     }
 
@@ -120,14 +129,14 @@ const props = withDefaults(defineProps<{
       height: 1.25rem;
     }
   }
-  
+
   &--large {
-    padding: 1rem 2rem;
+    padding: 0 2rem;
     font-size: 1.125rem;
     min-height: $btn-height-large;
 
     &.brutal-btn--no-text {
-      padding: 1rem;
+      padding: 0;
       aspect-ratio: 1;
     }
 
@@ -171,6 +180,20 @@ const props = withDefaults(defineProps<{
   &--ghost {
     background-color: var(--white-color);
     color: var(--black-color);
+
+    &.brutal-btn--shaded-up {
+      @include brutal-shadow($elevated: true, $hover: true, $hover-color: #222428);
+    }
+
+    /* Quando for ghost E tiver o shaded-down, troca a cor do hover para preto */
+    &.brutal-btn--shaded-down {
+      @include brutal-shadow($elevated: false, $hover: true, $hover-color: #222428);
+    }
+
+    &.brutal-btn--shaded-none:hover:not(:disabled) {
+      transition: box-shadow 0.15s ease;
+      box-shadow: inset 0 0 0 999px #22242833;
+    }
   }
 
   /* Estado Inativo */

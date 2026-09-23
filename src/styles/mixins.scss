@@ -8,35 +8,39 @@
   border-radius: $brutal-rounded;
 }
 
-@mixin brutal-shadow($brutal-shadow: $shadow-offset, $elevated: true) {
+@mixin brutal-shadow($brutal-shadow: $shadow-offset, $elevated: true, $hover: false, $hover-color: #ffffff) {
   transition: transform 0.15s ease, box-shadow 0.15s ease;
 
   @if $elevated {
     // comportamento atual: nasce com sombra, "levanta" mais no hover
     box-shadow: $brutal-shadow $brutal-shadow 0px 0px var(--black-color);
+    transform: translate(-$brutal-shadow, -$brutal-shadow);
 
-    &:hover:not(:disabled) {
-      transform: translate($brutal-shadow, $brutal-shadow);
-      box-shadow: 0 0 0px 0px var(--black-color);
-    }
+    @if $hover {
+      &:hover:not(:disabled) {
+        transform: translate(0, 0);
+        box-shadow: 0 0 0px 0px var(--black-color), inset 0 0 0 999px rgba($hover-color, 0.2);
+      }
 
-    &:active:not(:disabled) {
-      transform: translate($brutal-shadow, $brutal-shadow);
-      box-shadow: 0 0 0px 0px var(--black-color);
+      &:active:not(:disabled) {
+        transform: translate(0,0);
+        box-shadow: 0 0 0px 0px var(--black-color);
+      }
     }
   } @else {
     // comportamento invertido: nasce "afundado" (sem sombra), sobe no hover
     box-shadow: 0 0 0px 0px var(--black-color);
-    transform: translate($brutal-shadow, $brutal-shadow);
 
-    &:hover:not(:disabled) {
-      transform: translate(0, 0);
-      box-shadow: $brutal-shadow $brutal-shadow 0px 0px var(--black-color);
-    }
+    @if $hover {
+      &:hover:not(:disabled) {
+        transform: translate(-$brutal-shadow, -$brutal-shadow);
+        box-shadow: $brutal-shadow $brutal-shadow 0px 0px var(--black-color), inset 0 0 0 999px rgba($hover-color, 0.2);
+      }
 
-    &:active:not(:disabled) {
-      transform: translate($brutal-shadow, $brutal-shadow);
-      box-shadow: 0 0 0px 0px var(--black-color);
+      &:active:not(:disabled) {
+        transform: translate(-$brutal-shadow, -$brutal-shadow);
+        box-shadow: 0 0 0px 0px var(--black-color);
+      }
     }
   }
 }
