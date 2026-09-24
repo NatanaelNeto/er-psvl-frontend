@@ -11,6 +11,7 @@ const props = withDefaults(defineProps<{
   rounded?: RoundedType
   shaded?: ShadeType
   type?: ButtonType
+  nativeType?: 'button' | 'submit' | 'reset'
   size?: ButtonSize
   iconPosition?: IconPosition
   disabled?: boolean
@@ -19,24 +20,42 @@ const props = withDefaults(defineProps<{
   rounded: 'none',
   shaded: 'up',
   type: 'primary',
+  nativeType: 'button',
   size: 'medium',
   iconPosition: 'left',
   disabled: false,
   width: 'auto',
 })
+
+const emit = defineEmits<{
+  (e: 'click', event: MouseEvent): void
+  (e: 'focus', event: FocusEvent): void
+  (e: 'blur', event: FocusEvent): void
+  (e: 'dblclick', event: MouseEvent): void
+}>()
 </script>
 
 <template>
-  <button class="brutal-btn" :style="{ width: props.width }" :class="[
-    `brutal-btn--${props.type}`,
-    `brutal-btn--${props.size}`,
-    `brutal-btn--shaded-${props.shaded}`,
-    `brutal-btn--rounded-${props.rounded}`,
-    {
-      'brutal-btn--icon-right': props.iconPosition === 'right',
-      'brutal-btn--no-text': !$slots.default
-    }
-  ]" :disabled="disabled">
+  <button 
+    :type="props.nativeType"
+    class="brutal-btn" 
+    :style="{ width: props.width }" 
+    :class="[
+      `brutal-btn--${props.type}`,
+      `brutal-btn--${props.size}`,
+      `brutal-btn--shaded-${props.shaded}`,
+      `brutal-btn--rounded-${props.rounded}`,
+      {
+        'brutal-btn--icon-right': props.iconPosition === 'right',
+        'brutal-btn--no-text': !$slots.default
+      }
+    ]" 
+    :disabled="props.disabled"
+    @click="emit('click', $event)"
+    @focus="emit('focus', $event)"
+    @blur="emit('blur', $event)"
+    @dblclick="emit('dblclick', $event)"
+  >
     <!-- Slot do Ícone (Só é renderizado se algo for passado para #icon) -->
     <span v-if="$slots.icon" class="brutal-btn__icon">
       <slot name="icon" />

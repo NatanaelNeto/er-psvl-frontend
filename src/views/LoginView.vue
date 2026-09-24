@@ -2,7 +2,42 @@
 import BrutalCard from '@/components/layout/BrutalCard.vue';
 import BrutalButton from '@/components/ui/BrutalButton.vue';
 import BrutalInput from '@/components/ui/BrutalInput.vue';
+import { supabase } from '@/services/supabase';
 import { ChevronRight, Lock, Undo2, User } from '@lucide/vue';
+import { ref } from 'vue';
+import { useRouter } from 'vue-router';
+
+const email = ref('');
+const password = ref('');
+const loading = ref(false);
+const errorMessage = ref('');
+
+const router = useRouter();
+
+const handleLogin = async () => {
+  if (!email.value || !password.value) {
+    errorMessage.value = 'Por favor, preencha todos os campos.';
+    return;
+  }
+
+  loading.value = true;
+  try {
+    const { data, error } = await supabase.auth.signInWithPassword({
+      email: email.value,
+      password: password.value
+    });
+
+    if (error) throw error;
+
+    console.log('Login realizado com sucesso!', data);
+    router.push('/');
+  } catch (error) {
+    console.error('Erro no login:', error);
+    errorMessage.value = 'E-mail ou senha incorretos. Tente novamente.';
+  } finally {
+    loading.value = false;
+  }
+}
 
 </script>
 
@@ -20,12 +55,12 @@ import { ChevronRight, Lock, Undo2, User } from '@lucide/vue';
       </template>
       <div class="login__content">
         <div class="login__content--inputs">
-          <BrutalInput label="E-mail" placeholder="seu.nome@exemplo.com">
+          <BrutalInput v-model="email" label="E-mail" placeholder="seu.nome@exemplo.com">
             <template #left>
               <User />
             </template>
           </BrutalInput>
-          <BrutalInput label="Senha" placeholder="*******" type="password">
+          <BrutalInput v-model="password" label="Senha" placeholder="*******" type="password">
             <template #left>
               <Lock />
             </template>
@@ -33,6 +68,7 @@ import { ChevronRight, Lock, Undo2, User } from '@lucide/vue';
         </div>
       </div>
       <template #footer>
+        <p v-if="errorMessage">{{ errorMessage }}</p>
         <div class="login__footer">
           <BrutalButton width="100%" type="ghost">
             <template #icon>
@@ -40,7 +76,7 @@ import { ChevronRight, Lock, Undo2, User } from '@lucide/vue';
             </template>
             Voltar
           </BrutalButton>
-          <BrutalButton width="100%" type="secondary">
+          <BrutalButton width="100%" type="secondary" :disabled="loading" @click="handleLogin">
             <template #icon>
               <ChevronRight />
             </template>
