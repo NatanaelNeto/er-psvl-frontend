@@ -3,37 +3,46 @@ import BrutalCard from '@/components/layout/BrutalCard.vue';
 import BrutalButton from '@/components/ui/BrutalButton.vue';
 import BrutalInput from '@/components/ui/BrutalInput.vue';
 import { supabase } from '@/services/supabase';
+import { useToastStore } from '@/stores/toastStore';
 import { ChevronRight, Lock, Undo2, User } from '@lucide/vue';
 import { ref } from 'vue';
 import { useRouter } from 'vue-router';
 
+const toast = useToastStore();
+
 const email = ref('');
 const password = ref('');
+
+const validateEmail = (value: string | number) => {
+  if (!value) return 'O e-mail é obrigatório';
+  const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+  if (!emailRegex.test(String(value))) return 'Digite um e-mail válido';
+  return true;
+};
 const loading = ref(false);
-const errorMessage = ref('');
 
 const router = useRouter();
 
 const handleLogin = async () => {
   if (!email.value || !password.value) {
-    errorMessage.value = 'Por favor, preencha todos os campos.';
+    toast.addToast('Por favor, preencha todos os campos.', 'error');
     return;
   }
 
   loading.value = true;
   try {
-    const { data, error } = await supabase.auth.signInWithPassword({
+    const { error } = await supabase.auth.signInWithPassword({
       email: email.value,
       password: password.value
     });
 
     if (error) throw error;
 
-    console.log('Login realizado com sucesso!', data);
+    toast.addToast(`Login realizado com sucesso! Seja bem-vindo, conselheiro!`, 'success');
     router.push('/');
   } catch (error) {
     console.error('Erro no login:', error);
-    errorMessage.value = 'E-mail ou senha incorretos. Tente novamente.';
+    toast.addToast('E-mail ou senha incorretos. Tente novamente.', 'error');
   } finally {
     loading.value = false;
   }
@@ -55,7 +64,7 @@ const handleLogin = async () => {
       </template>
       <div class="login__content">
         <div class="login__content--inputs">
-          <BrutalInput v-model="email" label="E-mail" placeholder="seu.nome@exemplo.com">
+          <BrutalInput v-model="email" label="E-mail" placeholder="seu.nome@exemplo.com" :validator="validateEmail">
             <template #left>
               <User />
             </template>
@@ -68,7 +77,6 @@ const handleLogin = async () => {
         </div>
       </div>
       <template #footer>
-        <p v-if="errorMessage">{{ errorMessage }}</p>
         <div class="login__footer">
           <BrutalButton width="100%" type="ghost">
             <template #icon>

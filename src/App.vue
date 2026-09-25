@@ -3,6 +3,7 @@ import { onMounted } from 'vue'
 import { RouterView } from 'vue-router'
 import { supabase } from '@/services/supabase'
 import { useAuthStore } from '@/stores/authStore'
+import BrutalToast from './components/ui/BrutalToast.vue'
 
 const authStore = useAuthStore()
 
@@ -21,7 +22,11 @@ onMounted(() => {
 </script>
 
 <template>
-  <RouterView />
+  <div class="app">
+
+    <RouterView />
+    <BrutalToast />
+  </div>
 </template>
 
 <style scoped lang="scss"></style>

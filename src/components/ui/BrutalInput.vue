@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { computed } from 'vue'
+import { computed, ref } from 'vue'
 
 // 1. Definição dos Tipos Aceitos
 type InputSize = 'small' | 'medium' | 'large'
@@ -22,6 +22,7 @@ const props = withDefaults(defineProps<{
   message?: string
   status?: InputStatus
   width?: number | string
+  validator?: (value: string | number) => boolean | string
 }>(), {
   modelValue: '',
   type: 'text',
@@ -34,13 +35,43 @@ const props = withDefaults(defineProps<{
   width: '100%'
 })
 
+const isFocused = ref(false)
+const isTouched = ref(false)
+
+const validationResult = computed(() => {
+  if (!props.validator) return null
+  const result = props.validator(props.modelValue)
+  if (typeof result === 'string') {
+    return { valid: false, message: result }
+  }
+  return { valid: result, message: '' }
+})
+
 const resolvedStatus = computed(() => {
   if (props.error) return 'error'
+  
+  if (props.validator && validationResult.value !== null) {
+    if (!validationResult.value.valid) {
+      if (isFocused.value) return 'warning'
+      if (isTouched.value) return 'error'
+      return props.status
+    }
+    if (validationResult.value.valid && props.modelValue !== '') return 'success'
+  }
+
   return props.status
 })
 
 const resolvedMessage = computed(() => {
-  return props.message || props.error || props.hint
+  if (props.error) return props.error
+
+  if (props.validator && validationResult.value !== null && !validationResult.value.valid) {
+    if (isFocused.value || isTouched.value) {
+      return validationResult.value.message || props.message || props.hint
+    }
+  }
+
+  return props.message || props.hint
 })
 
 // 3. Emits para v-model e eventos
@@ -50,10 +81,22 @@ const emit = defineEmits<{
   (e: 'blur', event: FocusEvent): void
 }>()
 
-// 4. Handler de input
+// 4. Handlers de eventos
 const onInput = (event: Event) => {
   const target = event.target as HTMLInputElement
+  isTouched.value = true
   emit('update:modelValue', target.value)
+}
+
+const onFocus = (event: FocusEvent) => {
+  isFocused.value = true
+  emit('focus', event)
+}
+
+const onBlur = (event: FocusEvent) => {
+  isFocused.value = false
+  isTouched.value = true
+  emit('blur', event)
 }
 </script>
 
@@ -77,7 +120,7 @@ const onInput = (event: Event) => {
         { 'brutal-input--with-left-icon': $slots.left },
         { 'brutal-input--with-right-icon': $slots.right }
       ]" :type="type" :value="modelValue" :placeholder="placeholder" :disabled="disabled" @input="onInput"
-        @focus="$emit('focus', $event)" @blur="$emit('blur', $event)" />
+        @focus="onFocus" @blur="onBlur" />
 
       <!-- Slot para ícone à direita -->
       <span v-if="$slots.right" class="brutal-input-container__icon brutal-input-container__icon--right">
