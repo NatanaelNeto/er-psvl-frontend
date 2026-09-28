@@ -138,15 +138,13 @@ $page-colors: (
 
   &__content {
     padding: $padding;
+    flex: 1;
+    min-height: 100%;
 
     @each $name, $colors in $page-colors {
       &.content-#{$name} {
         background-color: list.nth($colors, 1);
-
-        :deep(h2),
-        :deep(p) {
-          color: list.nth($colors, 2);
-        }
+        color: list.nth($colors, 2);
       }
     }
   }

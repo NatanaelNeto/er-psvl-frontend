@@ -1,17 +1,26 @@
 <script setup lang="ts">
+import BrutalPage from '@/components/layout/BrutalPage.vue';
 import { useAuthStore } from '@/stores/authStore';
+import { LayoutDashboard } from '@lucide/vue';
+import { computed } from 'vue';
 
 const auth = useAuthStore();
+
+const subtitle = computed(() => {
+  return auth.profile ? `Seja bem-vindo, conselheiro ${auth.profile.name}!` : 'Seja bem-vindo ao Dashboard da Embaixada Pastor Sidny Viana Leite!';
+});
 </script>
 
 <template>
-  <div class="dashboard">
-    <div class="dashboard__header">
-      <h1 v-if="auth.profile">Olá, conselheiro {{ auth.profile.name }}!</h1>
-      <h1>Dashboard</h1>
-
+  <BrutalPage title="Dashboard" :subtitle="subtitle" icon-rounded="full" icon-type="secondary"
+    content-background="primary">
+    <template #icon>
+      <LayoutDashboard />
+    </template>
+    <div class="dashboard">
+      Oi
     </div>
-  </div>
+  </BrutalPage>
 </template>
 
 <style scoped lang="scss"></style>
