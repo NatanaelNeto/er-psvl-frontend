@@ -124,6 +124,13 @@ const emit = defineEmits<{
     &.brutal-btn--no-text {
       padding: 0;
       aspect-ratio: 1;
+      max-height: $btn-height-small;
+      max-width: $btn-height-small;
+
+      &:deep(svg) {
+        width: 1.25rem !important;
+        height: 1.25rem !important;
+      }
     }
 
     .brutal-btn__icon :deep(svg) {
@@ -140,6 +147,13 @@ const emit = defineEmits<{
     &.brutal-btn--no-text {
       padding: 0;
       aspect-ratio: 1;
+      max-height: $btn-height-medium;
+      max-width: $btn-height-medium;
+
+      &:deep(svg) {
+        width: 1.5rem !important;
+        height: 1.5rem !important;
+      }
     }
 
     .brutal-btn__icon :deep(svg) {
@@ -156,6 +170,13 @@ const emit = defineEmits<{
     &.brutal-btn--no-text {
       padding: 0;
       aspect-ratio: 1;
+      max-height: $btn-height-large;
+      max-width: $btn-height-large;
+
+      &:deep(svg) {
+        width: 1.75rem !important;
+        height: 1.75rem !important;
+      }
     }
 
     .brutal-btn__icon :deep(svg) {

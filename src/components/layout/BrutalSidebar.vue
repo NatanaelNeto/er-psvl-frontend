@@ -38,7 +38,7 @@ const props = withDefaults(defineProps<{
   display: flex;
   flex-direction: column;
 
-  transition: width 0.3s ease;
+  transition: all 0.3s ease;
 
   &--visible {
     width: 20%;
