@@ -13,18 +13,22 @@ const router = createRouter({
     },
     {
       path: '/dashboard',
+      name: 'dashboard',
       component: DashboardView
     },
     {
       path: '/press-kit',
+      name: 'press-kit',
       component: PressKitView,
     },
     {
       path: '/login',
+      name: 'login',
       component: LoginView
     },
     {
       path: '/page-model',
+      name: 'page-model',
       component: BrutalPage
     }
   ],

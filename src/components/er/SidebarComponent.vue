@@ -1,10 +1,12 @@
 <script setup lang="ts">
-import BrutalSidebar from '../layout/BrutalSidebar.vue';
-import BrutalButton from '../ui/BrutalButton.vue';
-import BrutalDivider from '../layout/BrutalDivider.vue';
-import { LogOut, MoveLeft, MoveRight } from '@lucide/vue';
+import BrutalSidebar from '@/components/layout/BrutalSidebar.vue';
+import BrutalButton from '@/components/ui/BrutalButton.vue';
+import BrutalDivider from '@/components/layout/BrutalDivider.vue';
+import SidebarButtonComponent from '@/components/er/SidebarButtonComponent.vue';
 
+import { Calendar, LayoutDashboard, LogOut, MoveLeft, MoveRight, Settings, Users, UserShield } from '@lucide/vue';
 import { ref } from 'vue';
+
 
 const hideSidebar = ref(false);
 
@@ -23,6 +25,21 @@ function toggleSidebar() {
         <p class="u-brutal-font" v-if="!hideSidebar">
           Embaixada Pastor Sidny Viana Leite
         </p>
+      </div>
+    </template>
+    <template #default>
+      <div class="sidebar__content">
+        <div class="sidebar__content--actions">
+          <SidebarButtonComponent name="dashboard" :icon="LayoutDashboard" text="Dashboard"
+            :hide-sidebar="hideSidebar" />
+          <SidebarButtonComponent name="ambassadors" :icon="UserShield" text="Lista de Embaixadores"
+            :hide-sidebar="hideSidebar" />
+          <SidebarButtonComponent name="counselors" :icon="Users" text="Lista de Conselheiros"
+            :hide-sidebar="hideSidebar" />
+          <SidebarButtonComponent name="events" :icon="Calendar" text="Eventos" :hide-sidebar="hideSidebar" />
+          <BrutalDivider orientation="horizontal" />
+          <SidebarButtonComponent name="settings" :icon="Settings" text="Configurações" :hide-sidebar="hideSidebar" />
+        </div>
       </div>
     </template>
     <template #bottom>
@@ -76,6 +93,23 @@ function toggleSidebar() {
       -webkit-mask-size: contain;
       -webkit-mask-repeat: no-repeat;
       -webkit-mask-position: center;
+    }
+  }
+
+  &__content {
+    display: flex;
+    flex-flow: column wrap;
+    align-items: center;
+    width: 100%;
+
+    &--actions {
+      flex: 1;
+      display: flex;
+      flex-flow: column wrap;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      width: 100%;
     }
   }
 
