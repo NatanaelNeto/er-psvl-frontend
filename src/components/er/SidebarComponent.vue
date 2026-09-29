@@ -4,11 +4,13 @@ import BrutalButton from '@/components/ui/BrutalButton.vue';
 import BrutalDivider from '@/components/layout/BrutalDivider.vue';
 import SidebarButtonComponent from '@/components/er/SidebarButtonComponent.vue';
 
-import { Calendar, LayoutDashboard, LogOut, MoveLeft, MoveRight, Settings, Users, UserShield } from '@lucide/vue';
+import { Calendar, LayoutDashboard, LogOut, Moon, MoveLeft, MoveRight, Settings, Sun, Users, UserShield } from '@lucide/vue';
 import { ref } from 'vue';
+import { useThemeStore } from '@/stores/themeStore';
 
 
 const hideSidebar = ref(false);
+const theme = useThemeStore();
 
 function toggleSidebar() {
   hideSidebar.value = !hideSidebar.value;
@@ -23,7 +25,7 @@ function toggleSidebar() {
         <div class="sidebar__top--shield"></div>
         <BrutalDivider orientation="vertical" v-if="!hideSidebar" />
         <p class="u-brutal-font" v-if="!hideSidebar">
-          Embaixada Pastor Sidny Viana Leite
+          Embaixada<br>Pastor Sidny<br>Viana Leite
         </p>
       </div>
     </template>
@@ -39,26 +41,37 @@ function toggleSidebar() {
           <SidebarButtonComponent name="events" :icon="Calendar" text="Eventos" :hide-sidebar="hideSidebar" />
           <BrutalDivider orientation="horizontal" />
           <SidebarButtonComponent name="settings" :icon="Settings" text="Configurações" :hide-sidebar="hideSidebar" />
+          <BrutalButton tooltip="Alterar modo" @click="theme.toggleTheme" type="ghost" width="100%" size="small"
+            shaded="none" :bordered="false">
+            <template #icon>
+              <Moon v-if="theme.isDark" />
+              <Sun v-else />
+            </template>
+            <template #default v-if="!hideSidebar">
+              {{ theme.isDark ? 'Modo Escuro' : 'Modo Claro' }}
+            </template>
+          </BrutalButton>
+          <BrutalButton tooltip="Ocultar" @click="toggleSidebar" type="ghost" width="100%" size="small" shaded="none"
+            :bordered="false">
+            <template #icon>
+              <MoveLeft v-if="!hideSidebar" />
+              <MoveRight v-else />
+            </template>
+            <template #default v-if="!hideSidebar">
+              Ocultar
+            </template>
+          </BrutalButton>
         </div>
       </div>
     </template>
     <template #bottom>
       <div class="sidebar__bottom">
-        <BrutalButton type="error" width="100%" size="small">
+        <BrutalButton tooltip="Sair da aplicação" type="error" width="100%" size="small">
           <template #icon>
             <LogOut />
           </template>
           <template #default v-if="!hideSidebar">
             Sair
-          </template>
-        </BrutalButton>
-        <BrutalButton @click="toggleSidebar" type="ghost" width="100%" size="small" shaded="none" :bordered="false">
-          <template #icon>
-            <MoveLeft v-if="!hideSidebar" />
-            <MoveRight v-else />
-          </template>
-          <template #default v-if="!hideSidebar">
-            Ocultar
           </template>
         </BrutalButton>
       </div>
@@ -110,6 +123,11 @@ function toggleSidebar() {
       justify-content: center;
       gap: 8px;
       width: 100%;
+
+      :deep(.brutal-btn:not(.brutal-btn--no-text)) {
+        justify-content: flex-start !important;
+        text-align: left;
+      }
     }
   }
 
@@ -119,6 +137,12 @@ function toggleSidebar() {
     align-items: center;
     justify-content: center;
     gap: 8px
+  }
+
+  .u-brutal-font {
+    max-height: 52px;
+    overflow: hidden;
+    white-space: nowrap;
   }
 }
 </style>

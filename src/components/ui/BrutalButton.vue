@@ -17,6 +17,7 @@ const props = withDefaults(defineProps<{
   disabled?: boolean
   width?: number | string
   bordered?: boolean
+  tooltip?: string
 }>(), {
   rounded: 'none',
   shaded: 'up',
@@ -27,6 +28,7 @@ const props = withDefaults(defineProps<{
   disabled: false,
   width: 'auto',
   bordered: true,
+  tooltip: '',
 })
 
 const emit = defineEmits<{
@@ -38,7 +40,7 @@ const emit = defineEmits<{
 </script>
 
 <template>
-  <button :type="props.nativeType" class="brutal-btn" :style="{ width: props.width }" :class="[
+  <button :title="props.tooltip" :type="props.nativeType" class="brutal-btn" :style="{ width: props.width }" :class="[
     `brutal-btn--${props.type}`,
     `brutal-btn--${props.size}`,
     `brutal-btn--shaded-${props.shaded}`,
@@ -253,6 +255,10 @@ const emit = defineEmits<{
     :deep(svg) {
       stroke-width: 2px;
     }
+  }
+
+  &__text {
+    white-space: nowrap;
   }
 }
 </style>

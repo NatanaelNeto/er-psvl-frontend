@@ -5,8 +5,10 @@ import { supabase } from '@/services/supabase'
 import { useAuthStore } from '@/stores/authStore'
 import BrutalToast from './components/ui/BrutalToast.vue'
 import SidebarComponent from './components/er/SidebarComponent.vue';
+import { useThemeStore } from './stores/themeStore.ts'
 
-const auth = useAuthStore()
+const auth = useAuthStore();
+const theme = useThemeStore();
 
 const route = useRoute();
 const noSidebarViews = [
@@ -18,6 +20,7 @@ const hideSidebar = computed(() => {
 });
 
 onMounted(() => {
+  theme.initTheme();
   // Pega a sessão inicial assim que o app abre
   supabase.auth.getSession().then(async ({ data }) => {
     await auth.setUser(data.session?.user ?? null)

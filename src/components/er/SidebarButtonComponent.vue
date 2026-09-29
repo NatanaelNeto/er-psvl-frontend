@@ -17,8 +17,9 @@ const navigate = () => router.push({ name: props.name });
 </script>
 
 <template>
-  <BrutalButton @click="navigate" size="small" width="100%" :type="route.name === props.name ? 'primary' : 'ghost'"
-    :bordered="route.name === props.name" :shaded="route.name === props.name ? 'up' : 'none'">
+  <BrutalButton :tooltip="props.text" @click="navigate" size="small" width="100%"
+    :type="route.name === props.name ? 'primary' : 'ghost'" :bordered="route.name === props.name"
+    :shaded="route.name === props.name ? 'up' : 'none'">
     <template #icon>
       <component :is="props.icon" />
     </template>
@@ -26,9 +27,4 @@ const navigate = () => router.push({ name: props.name });
   </BrutalButton>
 </template>
 
-<style scoped lang="scss">
-.brutal-btn {
-  text-align: left !important;
-  justify-content: flex-start !important;
-}
-</style>
+<style scoped lang="scss"></style>
