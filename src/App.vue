@@ -4,9 +4,7 @@ import { RouterView, useRoute } from 'vue-router'
 import { supabase } from '@/services/supabase'
 import { useAuthStore } from '@/stores/authStore'
 import BrutalToast from './components/ui/BrutalToast.vue'
-import BrutalSidebar from './components/layout/BrutalSidebar.vue';
-import BrutalButton from './components/ui/BrutalButton.vue'
-import { LogOut } from '@lucide/vue'
+import SidebarComponent from './components/er/SidebarComponent.vue';
 
 const auth = useAuthStore()
 
@@ -35,18 +33,7 @@ onMounted(() => {
 
 <template>
   <div class="app">
-    <BrutalSidebar v-if="!hideSidebar">
-      <template #bottom>
-        <div class="app--sidebar__bottom">
-          <BrutalButton type="error" width="100%" size="small">
-            <template #icon>
-              <LogOut />
-            </template>
-            Sair
-          </BrutalButton>
-        </div>
-      </template>
-    </BrutalSidebar>
+    <SidebarComponent v-if="!hideSidebar" />
     <div class="app__main">
       <RouterView />
     </div>

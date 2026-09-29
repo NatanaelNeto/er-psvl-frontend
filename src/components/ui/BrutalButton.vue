@@ -16,6 +16,7 @@ const props = withDefaults(defineProps<{
   iconPosition?: IconPosition
   disabled?: boolean
   width?: number | string
+  bordered?: boolean
 }>(), {
   rounded: 'none',
   shaded: 'up',
@@ -25,6 +26,7 @@ const props = withDefaults(defineProps<{
   iconPosition: 'left',
   disabled: false,
   width: 'auto',
+  bordered: true,
 })
 
 const emit = defineEmits<{
@@ -36,26 +38,18 @@ const emit = defineEmits<{
 </script>
 
 <template>
-  <button 
-    :type="props.nativeType"
-    class="brutal-btn" 
-    :style="{ width: props.width }" 
-    :class="[
-      `brutal-btn--${props.type}`,
-      `brutal-btn--${props.size}`,
-      `brutal-btn--shaded-${props.shaded}`,
-      `brutal-btn--rounded-${props.rounded}`,
-      {
-        'brutal-btn--icon-right': props.iconPosition === 'right',
-        'brutal-btn--no-text': !$slots.default
-      }
-    ]" 
-    :disabled="props.disabled"
-    @click="emit('click', $event)"
-    @focus="emit('focus', $event)"
-    @blur="emit('blur', $event)"
-    @dblclick="emit('dblclick', $event)"
-  >
+  <button :type="props.nativeType" class="brutal-btn" :style="{ width: props.width }" :class="[
+    `brutal-btn--${props.type}`,
+    `brutal-btn--${props.size}`,
+    `brutal-btn--shaded-${props.shaded}`,
+    `brutal-btn--rounded-${props.rounded}`,
+    {
+      'brutal-btn--icon-right': props.iconPosition === 'right',
+      'brutal-btn--no-text': !$slots.default,
+      'brutal-btn--bordered': props.bordered
+    }
+  ]" :disabled="props.disabled" @click="emit('click', $event)" @focus="emit('focus', $event)"
+    @blur="emit('blur', $event)" @dblclick="emit('dblclick', $event)">
     <!-- Slot do Ícone (Só é renderizado se algo for passado para #icon) -->
     <span v-if="$slots.icon" class="brutal-btn__icon">
       <slot name="icon" />
@@ -74,7 +68,6 @@ const emit = defineEmits<{
 
 /* Base do Botão */
 .brutal-btn {
-  @include brutal-border;
   @include brutal-font;
 
   display: inline-flex;
@@ -85,7 +78,11 @@ const emit = defineEmits<{
   text-transform: uppercase;
   cursor: pointer;
   outline: none;
-  margin: 4px;
+  border: none;
+
+  &--bordered {
+    @include brutal-border;
+  }
 
   &--shaded {
 
@@ -130,8 +127,8 @@ const emit = defineEmits<{
     }
 
     .brutal-btn__icon :deep(svg) {
-      width: 1rem;
-      height: 1rem;
+      width: 1.5rem;
+      height: 1.5rem;
     }
   }
 
@@ -146,8 +143,8 @@ const emit = defineEmits<{
     }
 
     .brutal-btn__icon :deep(svg) {
-      width: 1.25rem;
-      height: 1.25rem;
+      width: 1.75rem;
+      height: 1.75rem;
     }
   }
 
@@ -162,8 +159,8 @@ const emit = defineEmits<{
     }
 
     .brutal-btn__icon :deep(svg) {
-      width: 1.5rem;
-      height: 1.5rem;
+      width: 2rem;
+      height: 2rem;
     }
   }
 

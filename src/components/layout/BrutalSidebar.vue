@@ -1,13 +1,15 @@
 <script setup lang="ts">
 const props = withDefaults(defineProps<{
-  position?: 'left' | 'right'
+  position?: 'left' | 'right',
+  hide?: boolean,
 }>(), {
-  position: 'left'
+  position: 'left',
+  hide: false,
 })
 </script>
 
 <template>
-  <div class="sidebar" :class="`sidebar--${props.position}`">
+  <div class="sidebar" :class="[`sidebar--${props.position}`, `sidebar--${props.hide ? 'hidden' : 'visible'}`]">
     <div v-if="$slots.top" class="sidebar__top">
       <slot name="top" />
     </div>
@@ -27,17 +29,28 @@ const props = withDefaults(defineProps<{
 
 .sidebar {
   height: 100vh;
-  width: 20%;
   position: sticky;
-  /* Sticky é melhor que fixed aqui pois empurra o main em vez de sobrepor */
   top: 0;
-  min-width: 250px;
   overflow-y: auto;
   overflow-x: hidden;
   background-color: var(--white-color);
 
   display: flex;
   flex-direction: column;
+
+  transition: width 0.3s ease;
+
+  &--visible {
+    width: 20%;
+    max-width: 300px;
+    min-width: 250px;
+  }
+
+  &--hidden {
+    width: 100px;
+    max-width: 100px;
+    min-width: 100px;
+  }
 
   &__top {
     padding: $padding;
