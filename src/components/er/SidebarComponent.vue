@@ -34,9 +34,9 @@ function toggleSidebar() {
         <div class="sidebar__content--actions">
           <SidebarButtonComponent name="dashboard" :icon="LayoutDashboard" text="Dashboard"
             :hide-sidebar="hideSidebar" />
-          <SidebarButtonComponent name="ambassadors" :icon="UserShield" text="Lista de Embaixadores"
+          <SidebarButtonComponent name="ambassadors" :icon="UserShield" text="Embaixadores"
             :hide-sidebar="hideSidebar" />
-          <SidebarButtonComponent name="counselors" :icon="Users" text="Lista de Conselheiros"
+          <SidebarButtonComponent name="counselors" :icon="Users" text="Conselheiros"
             :hide-sidebar="hideSidebar" />
           <SidebarButtonComponent name="events" :icon="Calendar" text="Eventos" :hide-sidebar="hideSidebar" />
           <BrutalDivider orientation="horizontal" />
@@ -95,7 +95,6 @@ function toggleSidebar() {
       aspect-ratio: 1;
       height: 4rem;
       background-color: $secondary-color;
-      margin: 0 auto;
 
       mask-image: url('@/assets/shield.svg');
       mask-size: contain;
