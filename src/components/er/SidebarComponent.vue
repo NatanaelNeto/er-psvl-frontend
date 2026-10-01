@@ -7,13 +7,25 @@ import SidebarButtonComponent from '@/components/er/SidebarButtonComponent.vue';
 import { Calendar, LayoutDashboard, LogOut, Moon, MoveLeft, MoveRight, Settings, Sun, Users, UserShield } from '@lucide/vue';
 import { ref } from 'vue';
 import { useThemeStore } from '@/stores/themeStore';
+import { useAuthStore } from '@/stores/authStore';
+import { useRouter } from 'vue-router';
+import { useToastStore } from '@/stores/toastStore';
 
 
 const hideSidebar = ref(false);
 const theme = useThemeStore();
+const auth = useAuthStore();
+const router = useRouter();
+const toast = useToastStore();
 
-function toggleSidebar() {
+const toggleSidebar = () => {
   hideSidebar.value = !hideSidebar.value;
+}
+
+const logout = async () => {
+  await auth.setUser(null);
+  await router.push({ name: 'login' });
+  toast.addToast('Logout feito com sucesso', 'success');
 }
 
 </script>
@@ -66,7 +78,7 @@ function toggleSidebar() {
     </template>
     <template #bottom>
       <div class="sidebar__bottom">
-        <BrutalButton tooltip="Sair da aplicação" type="error" width="100%" size="small">
+        <BrutalButton @click="logout()" tooltip="Sair da aplicação" type="error" width="100%" size="small">
           <template #icon>
             <LogOut />
           </template>

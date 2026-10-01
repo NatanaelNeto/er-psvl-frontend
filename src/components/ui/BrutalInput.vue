@@ -103,11 +103,15 @@ const onBlur = (event: FocusEvent) => {
 <template>
   <div class="brutal-input-wrapper" :style="{ width: props.width }">
     <!-- Label Opcional -->
-    <label v-if="label" class="brutal-input-wrapper__label">{{ label }}</label>
+    <label v-if="label" class="brutal-input-wrapper__label" :class="[
+      `brutal-input-wrapper__label--${resolvedStatus}`
+    ]">{{ label }}</label>
 
     <div class="brutal-input-container">
       <!-- Slot para ícone à esquerda -->
-      <span v-if="$slots.left" class="brutal-input-container__icon brutal-input-container__icon--left">
+      <span v-if="$slots.left" class="brutal-input-container__icon brutal-input-container__icon--left" :class="[
+      `brutal-input-container__icon--${resolvedStatus}`
+    ]">
         <slot name="left" />
       </span>
 
@@ -123,7 +127,9 @@ const onBlur = (event: FocusEvent) => {
         @focus="onFocus" @blur="onBlur" />
 
       <!-- Slot para ícone à direita -->
-      <span v-if="$slots.right" class="brutal-input-container__icon brutal-input-container__icon--right">
+      <span v-if="$slots.right" class="brutal-input-container__icon brutal-input-container__icon--right" :class="[
+      `brutal-input-container__icon--${resolvedStatus}`
+    ]">
         <slot name="right" />
       </span>
     </div>
@@ -152,6 +158,21 @@ const onBlur = (event: FocusEvent) => {
     font-size: 0.75rem;
     text-transform: uppercase;
     color: var(--black-color);
+
+    &--error {
+      color: $error-color;
+      font-weight: 600;
+    }
+
+    &--success {
+      color: $success-color;
+      font-weight: 600;
+    }
+
+    &--warning {
+      color: $warning-color;
+      font-weight: 600;
+    }
   }
 
   &__message {
@@ -211,6 +232,21 @@ const onBlur = (event: FocusEvent) => {
 
     &--right {
       right: 0.75rem;
+    }
+
+     &--error {
+      color: $error-color;
+      font-weight: 600;
+    }
+
+    &--success {
+      color: $success-color;
+      font-weight: 600;
+    }
+
+    &--warning {
+      color: $warning-color;
+      font-weight: 600;
     }
   }
 }
