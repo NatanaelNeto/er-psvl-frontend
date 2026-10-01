@@ -219,7 +219,7 @@ const emit = defineEmits<{
   }
 
   &--ghost {
-    background-color: var(--white-color);
+    background-color: var(--background-color);
     color: var(--black-color);
 
     &.brutal-btn--shaded-up {

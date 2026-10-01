@@ -96,6 +96,7 @@ const logout = async () => {
 @use '@/styles/mixins' as *;
 
 .sidebar {
+  background-color: var(--background-color);
   &__top {
     display: flex;
     flex-flow: row nowrap;
