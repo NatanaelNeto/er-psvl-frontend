@@ -7,12 +7,14 @@
   --background-color: #eeeaf3;
   --white-color: #{$white-color};
   --black-color: #{$black-color};
+  --ghost-hover-color: #{$black-color + '22'};
 }
 
 html.dark {
   --background-color: #222428;
   --white-color: #{$black-color};
   --black-color: #{$white-color};
+  --ghost-hover-color: #{$white-color + '22'};
 }
 
 * {

@@ -37,7 +37,7 @@ const props = withDefaults(defineProps<{
         </div>
         <div class="brutal-page__header--content">
           <h1>{{ props.title || 'Título da página' }}</h1>
-          <p>{{ props.subtitle || 'Subtítulo da página.' }}</p>
+          <p v-if="props.subtitle && props.subtitle.length > 0">{{ props.subtitle }}</p>
         </div>
       </div>
       <div v-if="$slots.actions" class="brutal-page__header-right">
