@@ -7,7 +7,7 @@ type PageContentType = PageIconType
 
 const props = withDefaults(defineProps<{
   title: string
-  subtitle: string
+  subtitle?: string
   iconType?: PageIconType
   iconRounded?: PageIconBorderType
   iconShadow?: boolean

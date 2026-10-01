@@ -18,7 +18,7 @@ const subtitle = computed(() => {
       <LayoutDashboard />
     </template>
     <div class="dashboard">
-      Oi
+      Tela de Dashboard
     </div>
   </BrutalPage>
 </template>

@@ -40,7 +40,7 @@ function toggleSidebar() {
             :hide-sidebar="hideSidebar" />
           <SidebarButtonComponent name="events" :icon="Calendar" text="Eventos" :hide-sidebar="hideSidebar" />
           <BrutalDivider orientation="horizontal" />
-          <SidebarButtonComponent name="settings" :icon="Settings" text="Configurações" :hide-sidebar="hideSidebar" />
+          <SidebarButtonComponent name="settings" :icon="Settings" text="Configurações" :hide-sidebar="hideSidebar" type="secondary" />
           <BrutalButton tooltip="Alterar modo" @click="theme.toggleTheme" type="ghost" width="100%" size="small"
             shaded="none" :bordered="false">
             <template #icon>
