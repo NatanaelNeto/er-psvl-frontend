@@ -219,7 +219,7 @@ const emit = defineEmits<{
   }
 
   &--ghost {
-    background-color: var(--white-color);
+    background-color: var(--background-color);
     color: var(--black-color);
 
     &.brutal-btn--shaded-up {
@@ -233,7 +233,7 @@ const emit = defineEmits<{
 
     &.brutal-btn--shaded-none:hover:not(:disabled) {
       transition: box-shadow 0.15s ease;
-      box-shadow: inset 0 0 0 999px #22242833;
+      box-shadow: inset 0 0 0 999px var(--ghost-hover-color);
     }
   }
 

@@ -7,13 +7,25 @@ import SidebarButtonComponent from '@/components/er/SidebarButtonComponent.vue';
 import { Calendar, LayoutDashboard, LogOut, Moon, MoveLeft, MoveRight, Settings, Sun, Users, UserShield } from '@lucide/vue';
 import { ref } from 'vue';
 import { useThemeStore } from '@/stores/themeStore';
+import { useAuthStore } from '@/stores/authStore';
+import { useRouter } from 'vue-router';
+import { useToastStore } from '@/stores/toastStore';
 
 
 const hideSidebar = ref(false);
 const theme = useThemeStore();
+const auth = useAuthStore();
+const router = useRouter();
+const toast = useToastStore();
 
-function toggleSidebar() {
+const toggleSidebar = () => {
   hideSidebar.value = !hideSidebar.value;
+}
+
+const logout = async () => {
+  await auth.setUser(null);
+  await router.push({ name: 'login' });
+  toast.addToast('Logout feito com sucesso', 'success');
 }
 
 </script>
@@ -34,13 +46,13 @@ function toggleSidebar() {
         <div class="sidebar__content--actions">
           <SidebarButtonComponent name="dashboard" :icon="LayoutDashboard" text="Dashboard"
             :hide-sidebar="hideSidebar" />
-          <SidebarButtonComponent name="ambassadors" :icon="UserShield" text="Lista de Embaixadores"
+          <SidebarButtonComponent name="ambassadors" :icon="UserShield" text="Embaixadores"
             :hide-sidebar="hideSidebar" />
-          <SidebarButtonComponent name="counselors" :icon="Users" text="Lista de Conselheiros"
+          <SidebarButtonComponent name="counselors" :icon="Users" text="Conselheiros"
             :hide-sidebar="hideSidebar" />
           <SidebarButtonComponent name="events" :icon="Calendar" text="Eventos" :hide-sidebar="hideSidebar" />
           <BrutalDivider orientation="horizontal" />
-          <SidebarButtonComponent name="settings" :icon="Settings" text="Configurações" :hide-sidebar="hideSidebar" />
+          <SidebarButtonComponent name="settings" :icon="Settings" text="Configurações" :hide-sidebar="hideSidebar" type="secondary" />
           <BrutalButton tooltip="Alterar modo" @click="theme.toggleTheme" type="ghost" width="100%" size="small"
             shaded="none" :bordered="false">
             <template #icon>
@@ -66,7 +78,7 @@ function toggleSidebar() {
     </template>
     <template #bottom>
       <div class="sidebar__bottom">
-        <BrutalButton tooltip="Sair da aplicação" type="error" width="100%" size="small">
+        <BrutalButton @click="logout()" tooltip="Sair da aplicação" type="error" width="100%" size="small">
           <template #icon>
             <LogOut />
           </template>
@@ -84,6 +96,7 @@ function toggleSidebar() {
 @use '@/styles/mixins' as *;
 
 .sidebar {
+  background-color: var(--background-color);
   &__top {
     display: flex;
     flex-flow: row nowrap;
@@ -95,7 +108,6 @@ function toggleSidebar() {
       aspect-ratio: 1;
       height: 4rem;
       background-color: $secondary-color;
-      margin: 0 auto;
 
       mask-image: url('@/assets/shield.svg');
       mask-size: contain;
