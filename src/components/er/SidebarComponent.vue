@@ -10,6 +10,7 @@ import { useThemeStore } from '@/stores/themeStore';
 import { useAuthStore } from '@/stores/authStore';
 import { useRouter } from 'vue-router';
 import { useToastStore } from '@/stores/toastStore';
+import { supabase } from '@/services/supabase';
 
 
 const hideSidebar = ref(false);
@@ -23,11 +24,26 @@ const toggleSidebar = () => {
 }
 
 const logout = async () => {
-  await auth.setUser(null);
-  await router.push({ name: 'login' });
-  toast.addToast('Logout feito com sucesso', 'success');
-}
+  try {
+    // 1. O Supabase mata a sessão no servidor e destrói o token
+    const { error } = await supabase.auth.signOut();
+    if (error) throw error;
 
+    // Nota: Você nem precisaria chamar o auth.setUser(null) aqui,
+    // porque o onAuthStateChange do App.vue vai ouvir o signOut e fazer isso sozinho!
+    // Mas se quiser garantir a ordem de execução para o router, pode manter:
+    await auth.setUser(null);
+
+    await router.push({ name: 'login' });
+    toast.addToast('Logout feito com sucesso', 'success');
+  } catch (error) {
+    if (error instanceof Error) {
+      toast.addToast(`Erro ao fazer logout: ${error.message}`, 'error');
+    } else {
+      toast.addToast('Erro ao fazer logout', 'error');
+    }
+  }
+}
 </script>
 
 <template>
@@ -48,11 +64,11 @@ const logout = async () => {
             :hide-sidebar="hideSidebar" />
           <SidebarButtonComponent name="ambassadors" :icon="UserShield" text="Embaixadores"
             :hide-sidebar="hideSidebar" />
-          <SidebarButtonComponent name="counselors" :icon="Users" text="Conselheiros"
-            :hide-sidebar="hideSidebar" />
+          <SidebarButtonComponent name="counselors" :icon="Users" text="Conselheiros" :hide-sidebar="hideSidebar" />
           <SidebarButtonComponent name="events" :icon="Calendar" text="Eventos" :hide-sidebar="hideSidebar" />
           <BrutalDivider orientation="horizontal" />
-          <SidebarButtonComponent name="settings" :icon="Settings" text="Configurações" :hide-sidebar="hideSidebar" type="secondary" />
+          <SidebarButtonComponent name="settings" :icon="Settings" text="Configurações" :hide-sidebar="hideSidebar"
+            type="secondary" />
           <BrutalButton tooltip="Alterar modo" @click="theme.toggleTheme" type="ghost" width="100%" size="small"
             shaded="none" :bordered="false">
             <template #icon>
@@ -97,6 +113,7 @@ const logout = async () => {
 
 .sidebar {
   background-color: var(--background-color);
+
   &__top {
     display: flex;
     flex-flow: row nowrap;
