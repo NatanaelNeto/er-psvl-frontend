@@ -4,7 +4,7 @@ import BrutalButton from '@/components/ui/BrutalButton.vue';
 import BrutalInput from '@/components/ui/BrutalInput.vue';
 import { supabase } from '@/services/supabase';
 import { useToastStore } from '@/stores/toastStore';
-import { ChevronRight, Lock, Undo2, User } from '@lucide/vue';
+import { ChevronRight, Lock, User } from '@lucide/vue';
 import { ref } from 'vue';
 import { useRouter } from 'vue-router';
 
@@ -78,12 +78,6 @@ const handleLogin = async () => {
       </div>
       <template #footer>
         <div class="login__footer">
-          <BrutalButton width="100%" type="ghost">
-            <template #icon>
-              <Undo2 />
-            </template>
-            Voltar
-          </BrutalButton>
           <BrutalButton width="100%" type="secondary" :disabled="loading" @click="handleLogin">
             <template #icon>
               <ChevronRight />

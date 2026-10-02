@@ -7,7 +7,7 @@ import { computed } from 'vue';
 const auth = useAuthStore();
 
 const subtitle = computed(() => {
-  return auth.profile ? `Seja bem-vindo, conselheiro ${auth.profile.name}!` : 'Seja bem-vindo ao Dashboard da Embaixada Pastor Sidny Viana Leite!';
+  return `Seja bem-vindo, conselheiro ${auth.profile?.name ?? 'da Embaixada Pastor Sidny Viana Leite'}!`;
 });
 </script>
 
