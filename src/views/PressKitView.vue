@@ -3,6 +3,85 @@ import BrutalButton from '@/components/ui/BrutalButton.vue';
 import BrutalCard from '@/components/layout/BrutalCard.vue';
 import { User } from '@lucide/vue';
 import BrutalInput from '@/components/ui/BrutalInput.vue';
+import { h, ref } from 'vue';
+import type { AmbassadorType } from '@/types/AmbassadorType';
+import BrutalDataTable from '@/components/layout/BrutalDataTable.vue';
+import type { BrutalTableColumn } from '@/components/utils/BrutalTableColumnType';
+
+const mock = ref<AmbassadorType[]>([
+  {
+    id: '1',
+    name: 'Ambassador 1',
+    birthday: '2000-01-01',
+    role: 'Ambassador',
+    is_chief: false,
+    guardian_name: 'Guardian 1',
+    guardian_phone: '123456789',
+    counselor_id: '1',
+    score: 10,
+    active: true,
+    created_at: '2022-01-01',
+    created_by: 'Admin',
+    modified_at: '2022-01-01',
+    modified_by: 'Admin',
+  },
+  {
+    id: '2',
+    name: 'Ambassador 2',
+    birthday: '2000-01-01',
+    role: 'Ambassador',
+    is_chief: false,
+    guardian_name: 'Guardian 2',
+    guardian_phone: '987654321',
+    counselor_id: '2',
+    score: 20,
+    active: true,
+    created_at: '2022-01-01',
+    created_by: 'Admin',
+    modified_at: '2022-01-01',
+    modified_by: 'Admin',
+  },
+  {
+    id: '3',
+    name: 'Ambassador 3',
+    birthday: '2000-01-01',
+    role: 'Ambassador',
+    is_chief: false,
+    guardian_name: 'Guardian 3',
+    guardian_phone: '123456789',
+    counselor_id: '3',
+    score: 30,
+    active: true,
+    created_at: '2022-01-01',
+    created_by: 'Admin',
+    modified_at: '2022-01-01',
+    modified_by: 'Admin',
+  },
+]);
+
+const columns: BrutalTableColumn<AmbassadorType>[] = [
+  {
+    title: 'Nome',
+    key: 'id',
+    render: (row: AmbassadorType) => {
+      return h('span', null, () => row.name)
+    },
+  },
+  {
+    title: 'Função',
+    key: 'role',
+    render: (row: AmbassadorType) => {
+      return h('span', null, () => row.role)
+    },
+  },
+  {
+    title: 'Nome do Responsável',
+    key: 'guardian_name',
+    render: (row: AmbassadorType) => {
+      return h('span', null, () => row.guardian_name)
+    },
+  },
+]
 </script>
 
 <template>
@@ -147,6 +226,14 @@ import BrutalInput from '@/components/ui/BrutalInput.vue';
             <BrutalInput label="Teste de Estado" placeholder="Alerta" status="warning" message="Cuidado!" />
             <BrutalInput label="Teste de Estado" placeholder="Erro" error="Erro ao preencher" />
           </div>
+        </BrutalCard>
+      </div>
+    </section>
+    <section>
+      <h2>Brutal Table</h2>
+      <div class="container">
+        <BrutalCard title="Tabela de Embaixadores">
+          <BrutalDataTable :columns="columns" :data="mock" />
         </BrutalCard>
       </div>
     </section>

@@ -1,0 +1,16 @@
+export type AmbassadorType = {
+  id: string,
+  name: string,
+  birthday: string,
+  role: string,
+  is_chief: boolean,
+  guardian_name: string,
+  guardian_phone: string,
+  counselor_id: string,
+  score: number,
+  active: boolean,
+  created_at: string,
+  created_by: string,
+  modified_at: string,
+  modified_by: string,
+}
