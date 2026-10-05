@@ -7,7 +7,9 @@ const props = withDefaults(defineProps<{
   data: T[];
   size?: 'small' | 'medium' | 'large';
   maxHeight?: string;
+  spaced?: boolean
 }>(), {
+  spaced: true,
   size: 'medium',
   maxHeight: '300px'
 });
@@ -24,8 +26,8 @@ const props = withDefaults(defineProps<{
           </th>
         </tr>
       </thead>
-      <tbody>
-        <tr class="brutal-table__spacer">
+      <tbody :class="[{'brutal-table__spaced': props.spaced}]">
+        <tr v-if="props.spaced" class="brutal-table__spacer">
           <td :colspan="props.columns.length"></td>
         </tr>
         <tr v-if="props.data.length === 0">
@@ -97,9 +99,25 @@ const props = withDefaults(defineProps<{
   }
 
   /* Efeito Hover nas Linhas */
-  tbody tr:not(:first-child) {
+  tbody.brutal-table__spaced tr:not(:first-child) {
     @include brutal-border;
 
+    background-color: var(--white-color);
+    box-shadow: $shadow-offset 0 0px 0px var(--black-color);
+    transition: background-color 0.15s ease;
+    
+    &:hover {
+      background-color: rgba($secondary-color, 0.1);
+    }
+    
+    &:last-child {
+      box-shadow: $shadow-offset 0 0px 0px var(--black-color), $shadow-offset $shadow-offset 0px 0px var(--black-color);
+    }
+  }
+  
+  tbody:not(.brutal-table__spaced) tr {
+    @include brutal-border;
+    
     background-color: var(--white-color);
     box-shadow: $shadow-offset 0 0px 0px var(--black-color);
     transition: background-color 0.15s ease;
@@ -107,14 +125,35 @@ const props = withDefaults(defineProps<{
     &:hover {
       background-color: rgba($secondary-color, 0.1);
     }
-
+    
     &:last-child {
       box-shadow: $shadow-offset 0 0px 0px var(--black-color), $shadow-offset $shadow-offset 0px 0px var(--black-color);
     }
   }
 
+  thead:has(+ tbody:not(.brutal-table__spaced))  {
+    box-shadow: none;
+    position: relative;
+
+    &:after {
+      position: absolute;
+      display: block;
+      right: -$border-width * 2;
+      top: 0;
+      content: '';
+      width: $border-width;
+      height: 120%;
+      background-color: var(--black-color);
+    }
+
+    tr th {
+      border-bottom: 0 !important;
+    }
+  }
+
   &__spacer {
     height: 1rem;
+    user-select: none;
     /* Altura do espaço entre cabeçalho e dados */
 
     td {

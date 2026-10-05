@@ -232,8 +232,11 @@ const columns: BrutalTableColumn<AmbassadorType>[] = [
     <section>
       <h2>Brutal Table</h2>
       <div class="container">
-        <BrutalCard title="Tabela de Embaixadores">
+        <BrutalCard title="Tabela de Embaixadores com espaçamento">
           <BrutalDataTable :columns="columns" :data="mock" />
+        </BrutalCard>
+        <BrutalCard title="Tabela de Embaixadores sem espaçamento">
+          <BrutalDataTable :columns="columns" :data="mock" :spaced="false" />
         </BrutalCard>
       </div>
     </section>
